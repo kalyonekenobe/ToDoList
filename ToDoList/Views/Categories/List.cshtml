@@ -1,0 +1,36 @@
+﻿@using ToDoList.Business.Entities
+@model ToDoList.Models.CategoryListViewModel
+
+<div class="row">
+    @await Html.PartialAsync("../Shared/_PageHeader.cshtml")
+    <div class="col-12">
+        <div class="categories-list shadowed">
+            <div class="categories-list-header d-flex flex-wrap justify-content-between align-items-center">
+                <h2>Categories list</h2>
+                <a class="button button-success" asp-action="Create">
+                    Create category
+                </a>
+            </div>
+            <div class="row" style="padding: 10px 10px 0 10px; margin-inline: -15px;">
+                @foreach (Category category in Model.Categories)
+                {
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-3 p-1" style="padding: 5px;">
+                        <div class="category d-flex flex-wrap justify-content-between align-items-center">
+                            <div class="content">
+                                <h3 class="d-inline-flex align-items-center">@category.Name <span class="ms-1">@category.Tasks?.Count()</span></h3>
+                            </div>
+                            <div class="controls">
+                                <a class="button button-warning" asp-action="Edit" asp-route-name="@category.Name">
+                                    <i class="fa-solid fa-pen-clip"></i>
+                                </a>
+                                <a class="button button-danger" asp-action="Delete" asp-route-name="@category.Name">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

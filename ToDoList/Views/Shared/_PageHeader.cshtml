@@ -1,0 +1,33 @@
+﻿@using ToDoList.Controllers
+@using static ToDoList.Controllers.StorageController
+@inject IHttpContextAccessor HttpContextAccessor
+
+<div class="col-12">
+    <div class="page-header mb-3 shadowed d-flex align-items-center justify-content-between flex-wrap">
+        <div class="d-flex align-items-center flex-wrap">
+            <h1>To Do List Application</h1>
+            <div class="navbar d-flex align-items-center flex-wrap">
+                <nav>
+                    <a asp-controller="Tasks" asp-action="List">Tasks</a>
+                    <a asp-controller="Categories" asp-action="List">Categories</a>
+                </nav>
+            </div>
+        </div>
+        <div class="storage-type-filter col-12 col-sm-auto mt-3 mt-sm-0 d-flex align-items-center">
+            <label>Storage type: </label>
+            <div class="dropdown">
+                <a class="button button-dark dropdown-toggle ms-2" href="#" role="button" id="categories-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    @(((Storages)(int.Parse(HttpContextAccessor.HttpContext?.Request.Cookies["StorageId"] ?? ((int)StorageController.DefaultStorage).ToString()))).ToString())
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="stprage-type-dropdown">
+                    <li>
+                        <a class="dropdown-item" asp-controller="Storage" asp-action="ChangeStorage" asp-route-storageId="@((int)Storages.MsSql)" asp-route-returnUri="@Context?.Request.Path">@Storages.MsSql.ToString()</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" asp-controller="Storage" asp-action="ChangeStorage" asp-route-storageId="@((int)Storages.Xml)" asp-route-returnUri="@Context?.Request.Path">@Storages.Xml.ToString()</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

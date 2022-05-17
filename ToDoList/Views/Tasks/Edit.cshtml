@@ -1,0 +1,43 @@
+﻿@using ToDoList.Business.Entities
+@model ToDoList.Models.EditTaskFormViewModel
+
+
+<div class="row">
+    @await Html.PartialAsync("../Shared/_PageHeader.cshtml")
+    <div class="col-12">
+        <div class="form-container shadowed">
+            <form class="edit-task-form" asp-action="Edit" method="post">
+                <div asp-validation-summary="All"></div>
+                <div class="form-group">
+                    <div class="form-group-item col-12 col-md-6">
+                        <label asp-for="Task.Deadline">Deadline</label>
+                        <input asp-for="Task.Deadline"/>
+                    </div>
+                    <div class="form-group-item col-12 col-md-6">
+                        <label asp-for="Task.CategoryName">Category</label>
+                        <select asp-for="Task.CategoryName">
+                            <option value="@null">None</option>
+                            @foreach (Category category in Model.Categories) 
+                            {
+                                <option value="@category.Name">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group-item col-12">
+                        <label asp-for="Task.Name">Task</label>
+                        <div class="d-flex flex-wrap">
+                            <div class="col-12 col-sm-9 col-md-10 col-lg-11">
+                                <input asp-for="Task.Name"/>
+                            </div>
+                            <div class="col-12 col-sm-3 col-md-2 ps-sm-2 col-lg-1 mt-3 mt-sm-0">
+                                <input type="submit" class="button button-success w-100 h-100" value="Edit" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

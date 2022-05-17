@@ -1,0 +1,26 @@
+﻿@using ToDoList.Business.Entities
+@model ToDoList.Models.CategoryViewModel
+
+<div class="row">
+    @await Html.PartialAsync("../Shared/_PageHeader.cshtml")
+    <div class="col-12">
+        <div class="form-container shadowed">
+            <div asp-validation-summary="All"></div>
+            <form class="category-form w-100" asp-action="Create" method="Post">
+                <div class="form-group">
+                    <div class="form-group-item col-12">
+                        <label asp-for="Name">Name</label>
+                        <div class="d-flex flex-wrap align-items-stretch">
+                            <div class="col-9 col-md-10">
+                                <input asp-for="Name" />
+                            </div>
+                            <div class="col-3 col-md-2 ps-2">
+                                <input class="button button-success w-100" type="submit" value="Create" />
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

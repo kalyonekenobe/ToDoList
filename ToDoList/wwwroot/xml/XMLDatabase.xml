@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database>
+  <Tasks>
+    
+    
+    
+    
+  
+
+
+</Tasks>
+  <Categories>
+    <Category Name="Home" Tasks="" />
+    <Category Name="Family" />
+    
+    
+    
+    
+    
+  	
+</Categories>
+  <Statuses>
+    <Status Id="1" Name="Executing" />
+    <Status Id="1" Name="Done" />
+    <Status Id="1" Name="Expired" />
+  </Statuses>
+</Database>

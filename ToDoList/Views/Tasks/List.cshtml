@@ -1,0 +1,143 @@
+﻿@using Microsoft.Extensions.Primitives
+@using ToDoList.Business.Entities
+@using Task = ToDoList.Business.Entities.Task
+@model ToDoList.Models.HomePageViewModel
+
+<div class="row">
+    @await Html.PartialAsync("../Shared/_PageHeader.cshtml")
+    @await Html.PartialAsync("../Shared/_CreateTaskForm.cshtml", Model.CreateTaskForm)
+    <div class="col-12">
+        <div class="tasks-container shadowed mt-3">
+            <div class="filters d-flex align-items-center justify-content-between flex-wrap">
+                <div class="category-filter d-flex align-items-center">
+                    <label>Category: </label>
+                    <div class="dropdown">
+                        <a class="button button-secondary dropdown-toggle" href="#" role="button" id="categories-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            @(ViewContext.RouteData.Values["category"] ?? "Not selected")
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categories-dropdown">
+                            <li>
+                                <a class="dropdown-item" asp-route-category="@null">Not selected</a>
+                            </li>
+                            @foreach (Category category in Model.Categories)
+                            {
+                                <li>
+                                    <a class="dropdown-item" asp-route-category="@category.Name">@category.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <a class="add-category ms-2 h-100" asp-controller="Categories" asp-action="Create">
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="task-list-container">
+                <div class="in-progress-tasks">
+                    <div class="title-container d-flex align-items-center">
+                        <h2 class="section-title my-4">In progress</h2>
+                        <span class="ms-2">@Model.InProcessTasks.Count()</span>
+                    </div>
+                    <div class="tasks">
+                        @foreach (Task task in Model.InProcessTasks)
+                        {
+                            <div class="task d-flex justify-content-between align-items-start flex-wrap">
+                                <div class="info col-12 col-md-7 col-lg-8 col-xl-9">
+                                    <div class="content">
+                                        <h3>@task.Name</h3>
+                                    </div>
+                                    <div class="params">
+                                        <span>@(task.Deadline != null ? "Due to: " + task.Deadline?.ToString("dd.MM.yyyy HH:mm") : "Without deadline")</span>
+                                    </div>
+                                </div>
+                                <div class="controls col-12 col-md-5 col-lg-4 col-xl-3 d-inline-flex mt-2 mt-md-0 justify-content-md-end align-items-center">
+                                    @if (!string.IsNullOrEmpty(task.CategoryName))
+                                    {
+                                        <a class="button button-light category-link" asp-route-category="@task.CategoryName">
+                                            @task.CategoryName
+                                        </a>
+                                    }
+                                    <a class="button button-success" asp-action="Execute" asp-route-id="@task.Id"> 
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                    </a>
+                                    <a class="button button-warning" asp-action="Edit" asp-route-id="@task.Id">
+                                        <i class="fa-solid fa-pen-clip"></i>
+                                    </a>
+                                    <a class="button button-danger" asp-action="Delete" asp-route-id="@task.Id">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>   
+                        }
+                    </div>
+                </div>
+                <div class="done-tasks">
+                    <div class="title-container d-flex align-items-center">
+                        <h2 class="section-title my-4">Done tasks</h2>
+                        <span class="ms-2">@Model.DoneTasks.Count()</span>
+                    </div>
+                    <div class="tasks">
+                        @foreach (Task task in Model.DoneTasks)
+                        {
+                            <div class="task d-flex justify-content-between align-items-start flex-wrap">
+                                <div class="info col-12 col-md-7 col-lg-8 col-xl-9">
+                                    <div class="content">
+                                        <h3>@task.Name</h3>
+                                    </div>
+                                    <div class="params">
+                                        <span class="done">Exectution time: @task.ExecutionTime?.ToString("dd.MM.yyyy HH:mm")</span>
+                                        <br />
+                                        <span>@(task.Deadline != null ? "Due to: " + task.Deadline?.ToString("dd.MM.yyyy HH:mm") : "Without deadline")</span>
+                                    </div>
+                                </div>
+                                <div class="controls col-12 col-md-5 col-lg-4 col-xl-3 d-inline-flex mt-2 mt-md-0 justify-content-md-end align-items-center">
+                                    @if (!string.IsNullOrEmpty(task.CategoryName))
+                                    {
+                                        <a class="button button-light category-link" asp-route-category="@task.CategoryName">
+                                            @task.CategoryName
+                                        </a>
+                                    }
+                                    <a class="button button-danger" asp-action="Delete" asp-route-id="@task.Id">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="expired-tasks">
+                    <div class="title-container d-flex align-items-center">
+                        <h2 class="section-title my-4">Expired tasks</h2>
+                        <span class="ms-2">@Model.ExpiredTasks.Count()</span>
+                    </div>
+                    <div class="tasks">
+                        @foreach (Task task in Model.ExpiredTasks)
+                        {
+                            <div class="task d-flex justify-content-between align-items-start flex-wrap">
+                                <div class="info col-12 col-md-7 col-lg-8 col-xl-9">
+                                    <div class="content">
+                                        <h3>@task.Name</h3>
+                                    </div>
+                                    <div class="params">
+                                        <span class="expired">@(task.Deadline != null ? "Expired: " + task.Deadline?.ToString("dd.MM.yyyy HH:mm") : "Without deadline")</span>
+                                    </div>
+                                </div>
+                                <div class="controls col-12 col-md-5 col-lg-4 col-xl-3 d-inline-flex mt-2 mt-md-0 justify-content-md-end align-items-center">
+                                    @if (!string.IsNullOrEmpty(task.CategoryName))
+                                    {
+                                        <a class="button button-light category-link" asp-route-category="@task.CategoryName">
+                                            @task.CategoryName
+                                        </a>
+                                    }
+                                    <a class="button button-danger" asp-action="Delete" asp-route-id="@task.Id">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
