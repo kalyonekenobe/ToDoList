@@ -1,5 +1,11 @@
 using ToDoList;
 using ToDoList.Business.Repositories;
+using ToDoList.API.GraphQL;
+using GraphQL;
+using GraphQL.Types;
+using GraphQL.Server;
+using GraphQL.MicrosoftDI;
+using GraphQL.SystemTextJson;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +31,17 @@ builder.Services.AddTransient<IStatusRepository, ToDoList.Xml.Repositories.Statu
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+builder.Services.AddSingleton<ISchema, ToDoListSchema>(services => new ToDoListSchema(new SelfActivatingServiceProvider(services)));
+
+builder.Services.AddGraphQL(options => options.AddSystemTextJson()
+											  .AddErrorInfoProvider(opts =>
+											  {
+												  opts.ExposeExceptionStackTrace = true;
+											  })
+											  .AddSchema<ToDoListSchema>()
+											  .AddGraphTypes(typeof(ToDoListSchema).Assembly));
+											  
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +59,8 @@ app.UseRouting();
 app.UseSession();
 
 app.UseAuthorization();
+
+app.UseGraphQLAltair();
 
 app.MapControllerRoute(
 	name: "default",

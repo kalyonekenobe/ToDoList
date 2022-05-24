@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoList.Business.Repositories;
 using ToDoList.Business.Entities;
-using ToDoList.Extensions;
 using ToDoList.Models;
 using AutoMapper;
 using ToDoList.Services;
+using ToDoList.Enums;
+using ToDoList.Extensions;
 
 namespace ToDoList.Controllers
 {
 	public class TasksController : Controller
 	{
-		private readonly StorageController.Storages storage = StorageController.DefaultStorage;
+		private readonly Storages storage = StorageController.DefaultStorage;
 		private readonly ICategoryRepository categoryRepository;
 		private readonly ITaskRepository taskRepository;
 		private readonly IMapper mapper;
 
 		public TasksController(IMapper mapper, IEnumerable<ITaskRepository> taskRepositories, IEnumerable<ICategoryRepository> categoryRepositories, IHttpContextAccessor httpContextAccessor)
 		{
-			storage = (StorageController.Storages)(int.Parse(httpContextAccessor.HttpContext?.Request.Cookies["StorageId"] ?? ((int)storage).ToString()));
+			storage = (Storages)int.Parse(httpContextAccessor.HttpContext?.Request.Cookies["StorageId"] ?? ((int)storage).ToString());
 			this.mapper = mapper;
 			categoryRepository = categoryRepositories.GetRequired(storage);
 			taskRepository = taskRepositories.GetRequired(storage);

@@ -1,5 +1,5 @@
 ﻿using ToDoList.Business.Repositories;
-using static ToDoList.Controllers.StorageController;
+using ToDoList.Enums;
 
 namespace ToDoList.Extensions
 {
@@ -13,41 +13,41 @@ namespace ToDoList.Extensions
 					switch (repositories)
 					{
 						case IEnumerable<ITaskRepository>:
-							return GetRepository<T, MsSqlDb.Repositories.TaskRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.TaskRepository>();
 						case IEnumerable<ICategoryRepository>:
-							return GetRepository<T, MsSqlDb.Repositories.CategoryRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.CategoryRepository>();
 						case IEnumerable<IStatusRepository>:
-							return GetRepository<T, MsSqlDb.Repositories.StatusRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.StatusRepository>();
 						default:
-							return GetRepository<T, MsSqlDb.Repositories.TaskRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.TaskRepository>();
 					}
 				case Storages.Xml:
 					switch (repositories)
 					{
 						case IEnumerable<ITaskRepository>:
-							return GetRepository<T, Xml.Repositories.TaskRepository>(repositories);
+							return repositories.GetRepository<T, Xml.Repositories.TaskRepository>();
 						case IEnumerable<ICategoryRepository>:
-							return GetRepository<T, Xml.Repositories.CategoryRepository>(repositories);
+							return repositories.GetRepository<T, Xml.Repositories.CategoryRepository>();
 						case IEnumerable<IStatusRepository>:
-							return GetRepository<T, Xml.Repositories.StatusRepository>(repositories);
+							return repositories.GetRepository<T, Xml.Repositories.StatusRepository>();
 						default:
-							return GetRepository<T, Xml.Repositories.TaskRepository>(repositories);
+							return repositories.GetRepository<T, Xml.Repositories.TaskRepository>();
 					}
 				default:
 					switch (repositories)
 					{
 						case IEnumerable<ITaskRepository>:
-							return GetRepository<T, MsSqlDb.Repositories.TaskRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.TaskRepository>();
 						case IEnumerable<ICategoryRepository>:
-							return GetRepository<T, MsSqlDb.Repositories.CategoryRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.CategoryRepository>();
 						case IEnumerable<IStatusRepository>:
-							return GetRepository<T, MsSqlDb.Repositories.StatusRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.StatusRepository>();
 						default:
-							return GetRepository<T, MsSqlDb.Repositories.TaskRepository>(repositories);
+							return repositories.GetRepository<T, MsSqlDb.Repositories.TaskRepository>();
 					}
 			}
 		}
-			
+
 		public static T GetRepository<T, E>(this IEnumerable<T> repositories) => repositories.SingleOrDefault(r => r?.GetType() == typeof(E))!;
 	}
 }

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GraphQL" Version="5.3.0" />
+    <PackageReference Include="GraphQL.DataLoader" Version="5.3.0" />
+    <PackageReference Include="GraphQL.MemoryCache" Version="5.3.0" />
+    <PackageReference Include="GraphQL.MicrosoftDI" Version="5.3.0" />
+    <PackageReference Include="GraphQL.NewtonsoftJson" Version="5.3.0" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoList.Business\ToDoList.Business.csproj" />
+    <ProjectReference Include="..\ToDoList.MsSqlDb\ToDoList.MsSqlDb.csproj" />
+    <ProjectReference Include="..\ToDoList.XML\ToDoList.Xml.csproj" />
+    <ProjectReference Include="..\ToDoList\ToDoList.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GraphQL\Schemas\" />
+  </ItemGroup>
+
+</Project>

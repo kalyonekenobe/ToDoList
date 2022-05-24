@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList.Enums;
 
 namespace ToDoList.Controllers
 {
 	public class StorageController : Controller
 	{
 		public static readonly Storages DefaultStorage = Storages.MsSql;
-
-		public enum Storages
-		{
-			MsSql,
-			Xml,
-		}
 
 		[HttpGet]
 		[Route("Storage/ChangeStorage/{storageId}/")]

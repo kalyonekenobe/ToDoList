@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.MsSqlDb", "ToDoLis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Xml", "ToDoList.XML\ToDoList.Xml.csproj", "{44CBBA4B-57DF-40EE-BFCC-793F6934DBF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoList.Business", "ToDoList.Business\ToDoList.Business.csproj", "{122BB61A-62F1-4B35-A404-F1B9E8B68AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList.Business", "ToDoList.Business\ToDoList.Business.csproj", "{122BB61A-62F1-4B35-A404-F1B9E8B68AD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
